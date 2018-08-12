@@ -1,28 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
+  // components: {
+  //   HelloWorld
+  // },
+  // created() {
+  //   const api = `https://vue-course-api.hexschool.io/api/albeehsiao/products`;
+  //   // const api = `${process.env.apiPath}/api/${process.env.customPath}/products`;
+  //   // console.log(process.env.apiPath, process.env.customPath);
+  //   this.$http.get(api).then((response) => {
+  //     console.log(response.data);
+  //   })
+  // }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import './assets/all';
 </style>
