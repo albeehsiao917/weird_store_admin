@@ -39,30 +39,7 @@
 		</table>
 
 		<!-- pagination -->
-		<!-- <nav aria-label="Page navigation example">
-		  <ul class="pagination">
-		    <li class="page-item" :class='{"disabled": !pagination.has_pre}'>
-		      <a class="page-link" href="#" aria-label="Previous" 
-		      	@click.prevent='getCoupon(pagination.current_page - 1)'>
-		        <span aria-hidden="true">&laquo;</span>
-		        <span class="sr-only">Previous</span>
-		      </a>
-		    </li>
-
-		    <li class="page-item" v-for='page in pagination.total_pages' :key='page'
-		    	:class='{"active": pagination.current_page === page}'>
-		    	<a class="page-link" href="#" @click.prevent='getCoupon(page)'>{{ page }}</a>
-		    </li>
-
-		    <li class="page-item" :class='{"disabled": !pagination.has_next}'>
-		      <a class="page-link" href="#" aria-label="Next"
-		      	@click.prevent='getCoupon(pagination.current_page + 1)'>
-		        <span aria-hidden="true">&raquo;</span>
-		        <span class="sr-only">Next</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav> -->
+		<Pagination :pages="pagination" @emitPages="getCoupon"></Pagination>
 
 		<!-- Modal -->
 		<div class="modal fade" id="couponModal" tabindex="-1" role="dialog"
@@ -133,7 +110,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-		        <button type="button" class="btn btn-danger" @click='delCoupon()'>
+		        <button type="button" class="btn btn-danger" @click='delCoupon'>
 		        	確認刪除</button>
 		      </div>	
 		    </div>
@@ -143,7 +120,9 @@
 </template>
 
 <script>
-	import $ from 'jquery'; 
+	import $ from 'jquery';
+	import Pagination from '../Pagination';
+
 	export default {
 		data() {
 			return {
@@ -233,6 +212,9 @@
 	      const timestamp = Math.floor(new Date(vm.due_date) / 1000);
 	      vm.tempCoupon.due_date = timestamp;
 	    }
+	  },
+	  components: {
+	    Pagination
 	  }
 	}
 </script>

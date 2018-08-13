@@ -30,36 +30,15 @@
 		</table>
 
 		<!-- pagination -->
-		<nav aria-label="Page navigation example">
-		  <ul class="pagination">
-		    <li class="page-item" :class='{"disabled": !pagination.has_pre}'>
-		      <a class="page-link" href="#" aria-label="Previous" 
-		      	@click.prevent='getOrders(pagination.current_page - 1)'>
-		        <span aria-hidden="true">&laquo;</span>
-		        <span class="sr-only">Previous</span>
-		      </a>
-		    </li>
-
-		    <li class="page-item" v-for='page in pagination.total_pages' :key='page'
-		    	:class='{"active": pagination.current_page === page}'>
-		    	<a class="page-link" href="#" @click.prevent='getOrders(page)'>{{ page }}</a>
-		    </li>
-
-		    <li class="page-item" :class='{"disabled": !pagination.has_next}'>
-		      <a class="page-link" href="#" aria-label="Next"
-		      	@click.prevent='getOrders(pagination.current_page + 1)'>
-		        <span aria-hidden="true">&raquo;</span>
-		        <span class="sr-only">Next</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-
+		<Pagination :pages="pagination" @emitPages="getOrders"></Pagination>
+		
 	</div>	
 </template>
 
 <script>
-	import $ from 'jquery'; 
+	import $ from 'jquery';
+	import Pagination from '../Pagination';
+
 	export default {
 		data() {
 			return {
@@ -89,20 +68,9 @@
 		},
 		created() {
 			this.getOrders();
-		}
-		// computed: {
-	 //    sortData: function(){
-	 //      let vm = this;
-	 //        if(vm.isReverse){
-	 //          return vm.data.sort(function(a,b){
-	 //            return a[vm.sortBy] - b[vm.sortBy];
-	 //          });
-	 //        }else{
-	 //          return vm.data.sort(function(a,b){
-	 //            return b[vm.sortBy] - a[vm.sortBy];
-	 //          });
-	 //        };
-	 //    }
-	 //  }
+		},
+		components: {
+	    Pagination
+	  }
 	}
 </script>
