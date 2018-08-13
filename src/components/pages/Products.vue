@@ -1,6 +1,8 @@
 <template>
 	<div>
 		<loading :active.sync="isLoading"></loading> 
+
+		<!-- table -->
 		<div class="text-right mt-4">
 			<button class="btn btn-outline-primary btn-lg" @click='openModal(true)'>
 				建立新產品</button>
@@ -20,8 +22,8 @@
 				<tr v-for="(item, key) in products" :key='item.id'>
 					<td>{{ item.category }}</td>
 					<td>{{ item.title }}</td>
-					<td class='text-right'>{{ item.origin_price }}</td>
-					<td class='text-right'>{{ item.price }}</td>
+					<td class='text-right'>{{ item.origin_price | currencyFilter }}</td>
+					<td class='text-right'>{{ item.price | currencyFilter }}</td>
 					<td>
 						<span v-if="item.is_enabled" class='text-success'>啟用</span>
 						<span v-else>未啟用</span>
@@ -34,6 +36,32 @@
 				</tr>
 			</tbody>
 		</table>
+
+		<!-- pagination -->
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		    <li class="page-item" :class='{"disabled": !pagination.has_pre}'>
+		      <a class="page-link" href="#" aria-label="Previous" 
+		      	@click.prevent='getProducts(pagination.current_page - 1)'>
+		        <span aria-hidden="true">&laquo;</span>
+		        <span class="sr-only">Previous</span>
+		      </a>
+		    </li>
+
+		    <li class="page-item" v-for='page in pagination.total_pages' :key='page'
+		    	:class='{"active": pagination.current_page === page}'>
+		    	<a class="page-link" href="#" @click.prevent='getProducts(page)'>{{ page }}</a>
+		    </li>
+
+		    <li class="page-item" :class='{"disabled": !pagination.has_next}'>
+		      <a class="page-link" href="#" aria-label="Next"
+		      	@click.prevent='getProducts(pagination.current_page + 1)'>
+		        <span aria-hidden="true">&raquo;</span>
+		        <span class="sr-only">Next</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
 
 		<!-- Modal -->
 		<div class="modal fade" id="productModal" tabindex="-1" role="dialog"
@@ -144,7 +172,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        是否刪除 <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
+		        是否刪除 <strong class="text-danger">{{ tempProduct.title }}</strong> 商品？ (刪除後將無法恢復)。
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
@@ -168,12 +196,13 @@
 				isLoading: false,
 				status: {
 					fileUploading: false
-				} //宣告變數去決定哪些是要使用 loading 效果
+				}, //宣告變數去決定哪些是要使用 loading icon效果
+				pagination: {}
 			}
 		},
 		methods: {
-			getProducts() {
-				const api = `https://vue-course-api.hexschool.io/api/albeehsiao/admin/products`;
+			getProducts(page = 1) { //page = 1 為 ES6 設定參數預設值的方法。如果page沒有傳入數值的話page = 1。若有的話則是根據page本身傳入的值做設定
+ 				const api = `https://vue-course-api.hexschool.io/api/albeehsiao/admin/products?page=${page}`;
 		    // const api = `${process.env.apiPath}`
 		    const vm = this;
 		    vm.isLoading = true;
@@ -181,6 +210,7 @@
 		      console.log(response.data);
 		      vm.isLoading = false;
 		      vm.products = response.data.products;
+		      vm.pagination = response.data.pagination;
 		    })
 			},
 			openModal(isNew, item) {
@@ -188,7 +218,7 @@
 					this.tempProduct = {};
 					this.isNew = true;
 				}else {
-					this.tempProduct = Object.assign({},item); //避免淺複製情庫發生，使用 Object.assign({},item) 指定 item 內容到 tempProduct
+					this.tempProduct = Object.assign({},item); //避免淺複製情況發生，使用 Object.assign({},item) 指定 item 內容到 tempProduct
 					this.isNew = false;
 				};
 				$('#productModal').modal('show');

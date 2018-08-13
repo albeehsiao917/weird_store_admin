@@ -10,13 +10,17 @@ import 'vue-loading-overlay/dist/vue-loading.min.css';
 import Vue from 'vue';
 import App from './App.vue';
 import './bus';
-
+import currencyFilter from './filters/currency';
+import dateFilter from './filters/date';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(Loading);
 
-Vue.component('Loading',Loading); //啟用Loading元件
+//啟用元件
+Vue.component('Loading',Loading);
+Vue.filter('currencyFilter',currencyFilter);
+Vue.filter('dateFilter',dateFilter);
 
 new Vue({
 	router,

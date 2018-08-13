@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 import dashboard from '@/components/Dashboard'
 import login from '@/components/pages/Login'
 import products from '@/components/pages/Products'
+import orderlist from '@/components/pages/OrderList'
+import coupon from '@/components/pages/Coupon'
 
 Vue.use(VueRouter)
 
@@ -29,13 +31,23 @@ export default new VueRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: dashboard,
-      // meta: { requiresAuth: true }, //剪下貼到children裡
+      // meta: { requiresAuth: true } //剪下貼到children裡
       children: [
         {
           path: 'products',
           name: 'products',
           component: products,
-          meta: { requiresAuth: true }, //以確保進入這頁時會被驗證
+          meta: { requiresAuth: true } //以確保進入這頁時會被驗證
+        },
+        {
+          path: 'orderlist',
+          name: 'orderlist',
+          component: orderlist 
+        },
+        {
+          path: 'coupon',
+          name: 'coupon',
+          component: coupon 
         }
       ]
     }
