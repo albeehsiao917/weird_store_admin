@@ -304,6 +304,9 @@
 				      if(response.data.success) {
 				      	vm.isLoading = false;
 				      	console.log("訂單已完成", response);
+				      	if(response.data.success) {
+				      		vm.$router.push(`/customercheckout/${response.data.orderId}`);
+				      	}
 				      }else {
 				      	vm.isLoading = false;
 				      	this.$bus.$emit('messsage:push', response.data.message, 'danger');

@@ -8,6 +8,7 @@ import products from '@/components/pages/Products'
 import orderlist from '@/components/pages/OrderList'
 import coupon from '@/components/pages/Coupon'
 import customerorder from '@/components/pages/CustomerOrder'
+import customercheckout from '@/components/pages/CustomerCheckout'
 
 Vue.use(VueRouter)
 
@@ -51,11 +52,23 @@ export default new VueRouter({
           name: 'coupon',
           component: coupon,
           meta: { requiresAuth: true }
-        },
+        }
+      ]
+    },
+    {
+      path: '/',
+      name: 'customer',
+      component: dashboard,
+      children: [
         {
           path: 'customerorder',
           name: 'customerorder',
           component: customerorder
+        },
+        {
+          path: 'customercheckout/:orderId',
+          name: 'customercheckout',
+          component: customercheckout
         }
       ]
     }
