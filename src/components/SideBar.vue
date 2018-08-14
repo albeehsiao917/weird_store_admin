@@ -17,7 +17,7 @@
 					</li>
 					<li class="nav-item">
 						<router-link class="nav-link" to="/dashboard/orderlist">
-							<i class="far fa-file-alt"></i>
+							<i class="fas fa-id-card"></i>
 							訂單列表
 						</router-link>
 					</li>
@@ -36,12 +36,10 @@
 					</a>
 				</h6>
 				<ul class="nav flex-column mb-2">
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-						<span data-feather="file-text"></span>
+					<router-link class="nav-link" to="/dashboard/customerorder">
+						<i class="fas fa-shopping-cart"></i>
 						模擬訂單
-						</a>
-					</li>
+					</router-link>
 				</ul>
 			</div>
 		</nav>

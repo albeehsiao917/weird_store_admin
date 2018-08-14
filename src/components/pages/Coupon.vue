@@ -40,7 +40,9 @@
 
 		<!-- pagination -->
 		<Pagination :pages="pagination" @emitPages="getCoupon"></Pagination>
-
+		<!-- :pages="{ 頁碼資訊 }" -->
+		<!-- @emitPages="更新頁面事件" -->
+		
 		<!-- Modal -->
 		<div class="modal fade" id="couponModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel" aria-hidden="true">

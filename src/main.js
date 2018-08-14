@@ -5,6 +5,8 @@ import router from './router';
 import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.min.css';
+import VeeValidate from 'vee-validate';
+import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
 
 //自定義套件
 import Vue from 'vue';
@@ -16,6 +18,9 @@ import dateFilter from './filters/date';
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(Loading);
+
+VeeValidate.Validator.localize('zh_TW', zhTWValidate);
+Vue.use(VeeValidate);
 
 //啟用元件
 Vue.component('Loading',Loading);

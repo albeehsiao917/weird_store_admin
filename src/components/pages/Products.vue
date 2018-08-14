@@ -39,6 +39,8 @@
 
 		<!-- pagination -->
 		<Pagination :pages="pagination" @emitPages="getProducts"></Pagination>
+		<!-- :pages="{ 頁碼資訊 }" -->
+		<!-- @emitPages="更新頁面事件" -->
 
 		<!-- Modal -->
 		<div class="modal fade" id="productModal" tabindex="-1" role="dialog"

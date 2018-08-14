@@ -7,23 +7,29 @@
 			<thead>
 				<tr>
 					<th width="150">購買時間</th>
-					<th>Email</th>
-					<th>購買款項</th>
+					<th class="click">Email</th>
+					<th class="click">購買款項</th>
 					<th width="150">應付金額</th>
 					<th width="150">是否啟用</th>
 				</tr>	
 			</thead>
 			<tbody>
-				<tr v-for="(item, key) in orders" :key='item.id'>
-					<td>timeConversion(item.create_at)</td>
+				<tr v-for="(item, key) in orders" :key='item.id' v-if="orders.length"
+          :class="{'text-secondary': !item.is_paid}">
+					<td>{{ item.create_at| dateFilter }}</td>
 					<td>{{ item.user.email }}</td>
-					<td v-for="(product, key) in orders.products" :key='product.id'>
-						{{ product.product_id }} x {{product.qty}} <br>
+					<td> 
+						<ul class="list-unstyled">
+							<li v-for="(product, i) in item.products" :key="i">
+								{{ product.product.title }} 
+								數量：{{ product.qty }} {{ product.product.unit }}
+							</li>
+						</ul>
 					</td>
 					<td class='text-right'>{{ item.total | currencyFilter }}</td>
 					<td>
 						<span v-if="item.is_paid" class='text-success'>已付款</span>
-						<span v-else>尚未付款</span>
+						<span v-else class="text-muted">尚未付款</span>
 					</td>
 				</tr>
 			</tbody>
@@ -31,6 +37,8 @@
 
 		<!-- pagination -->
 		<Pagination :pages="pagination" @emitPages="getOrders"></Pagination>
+		<!-- :pages="{ 頁碼資訊 }" -->
+		<!-- @emitPages="更新頁面事件" -->
 		
 	</div>	
 </template>
@@ -58,12 +66,6 @@
 		      vm.orders = response.data.orders;
 		      vm.pagination = response.data.pagination;
 		    })
-			},
-			timeConversion(create_at) {
-				let year = dates.getFullYear();
-				let month = dates.getMonth() + 1;
-				let date = dates.getDate();
-				return `${year}/${month}/${date}`
 			}
 		},
 		created() {
@@ -74,3 +76,12 @@
 	  }
 	}
 </script>
+
+<style>
+	.icon {
+	  display: inline-block;
+	}
+	.icon.inverse {
+	  transform: rotate(180deg)
+	}
+</style>
