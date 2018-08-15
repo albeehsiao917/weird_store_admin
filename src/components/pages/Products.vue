@@ -11,6 +11,7 @@
 			<thead>
 				<tr>
 					<th width="120">分類</th>
+					<th width="100">縮圖</th>
 					<th>名稱</th>
 					<th width="120">原價</th>
 					<th width="120">售價</th>
@@ -21,6 +22,10 @@
 			<tbody>
 				<tr v-for="(item, key) in products" :key='item.id'>
 					<td>{{ item.category }}</td>
+					<td class="p-0">
+						<img class="img-fluid" style="width:80px" :src="item.imageUrl" 
+						alt="商品圖片">
+					</td>
 					<td>{{ item.title }}</td>
 					<td class='text-right'>{{ item.origin_price | currencyFilter }}</td>
 					<td class='text-right'>{{ item.price | currencyFilter }}</td>
@@ -155,7 +160,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-		        <button type="button" class="btn btn-danger" @click='delProduct()'>
+		        <button type="button" class="btn btn-danger" @click='delProduct'>
 		        	確認刪除</button>
 		      </div>	
 		    </div>
@@ -231,8 +236,8 @@
 		    })
 			},
 			delProduct() {
+				const vm = this;
 				const api = `https://vue-course-api.hexschool.io/api/albeehsiao/admin/product/${vm.tempProduct.id}`;
-	      const vm = this;
 	      this.$http.delete(api).then((response) => {
 	        console.log(response.data);
 	        if(response.data.success){
